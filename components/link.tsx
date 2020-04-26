@@ -6,19 +6,20 @@ type Props = LinkProps & { withoutLang?: boolean; lang?: string };
 
 export const Link: React.FC<Props> = (props) => {
   const { lang: langFromContext } = useTranslation();
+  const { lang: langFromProps, withoutLang, ...restProps } = props;
 
-  const lang = props.lang || langFromContext;
+  const lang = langFromProps || langFromContext;
 
-  if (props.withoutLang) {
-    return <NextLink {...props} />;
+  if (withoutLang) {
+    return <NextLink {...restProps} />;
   }
 
   if (props.href === '/') {
-    return <NextLink {...props} href="/[lang]" as={`/${lang}`} />;
+    return <NextLink {...restProps} href="/[lang]" as={`/${lang}`} />;
   }
 
   const as = props.as ? `/${lang}${props.as}` : `/${lang}${props.href}`;
   const href = props.href ? `/[lang]${props.href}` : props.href;
 
-  return <NextLink {...props} as={as} href={href} />;
+  return <NextLink {...restProps} as={as} href={href} />;
 };

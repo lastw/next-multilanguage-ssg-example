@@ -20,14 +20,14 @@ export default function App({ Component, pageProps, router }: AppProps) {
 }
 
 function getLang(router: Router) {
-  if (router.query.lang && isValidLang(router.query.lang as string)) {
-    return router.query.lang as string;
+  const langFromQuery = Array.isArray(router.query.lang) ? router.query.lang[0] : router.query.lang;
+  if (langFromQuery && isValidLang(langFromQuery)) {
+    return langFromQuery;
   }
 
-  if (router.asPath.split('/')[1]) {
-  }
-  if (router.asPath.startsWith('/ru')) {
-    return 'ru';
+  const langFromPath = router.asPath.split('/')[1];
+  if (langFromPath && isValidLang(langFromPath)) {
+    return langFromPath;
   }
 
   return defaultLang;

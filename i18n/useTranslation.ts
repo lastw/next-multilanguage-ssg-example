@@ -54,7 +54,6 @@ const transliterate = (str: string) => {
     .reduce((result, letter) => result + (letters[letter] ? letters[letter] : letter), '');
 };
 
-console.log(letters);
 const createTranslateFunction = (lang: string) => (str: string) => {
   return lang === 'ru' ? transliterate(str) : str;
 };
